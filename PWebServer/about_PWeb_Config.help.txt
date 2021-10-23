@@ -1,0 +1,75 @@
+TOPIC
+	about_PWeb_Config
+
+SHORT DESCRIPTION
+	Describes the semantics of server.json.
+
+
+LONG DESCRIPTION
+	You can create a file called server.json inside the folder being served
+	by PWebServer. This file follows JSON syntax and is used to
+	configure advanced parameters of the server.
+
+	For a description of the JSON syntax, see:
+
+	https://en.wikipedia.org/wiki/JSON
+	http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf
+
+
+
+	There is support for the following properties:
+
+		{
+			"redirect": {},
+			"mapping": {},
+			"relay": {},
+			"hosts": {}
+		}
+
+	1.	Use the property "redirect" to make the server respond the request with http status 308 (permanent redirect).
+		This can be used if your site is hosted inside a subfolder, but you still want the users to be able to access it without typing the subpath.
+		For example: 'localhost:8080/' redirects to 'localhost:8080/mysite/'
+		The property key is a regex match pattern and the value is a regex replace pattern.
+
+		"redirect": {
+			"^/$": "/mysite/"
+		}
+
+
+	2.	Use the property "mapping" to configure paths to resources that are not in the disk with the same name specified in the request.
+		For example, you can specify that the file /css/style.css is actually /css/style.min.css.
+		These mappings only apply if the server cannot find a particular static resource (in the given example, only if /css/style.css does not exist).
+		The property key is a regex match pattern and the value is a regex replace pattern.
+
+		"mapping": {
+			"^/css/(.*).css$": "/css/$1.min.css",
+			"^/js/(.*).js$": "/js/$1.min.js",
+		}
+
+		You shouldn't switch folders here, because the browser wouldn't know about the path change and that can cause problems with the url referrer.
+		To change subpaths in your static server, use the redirect section.
+
+
+	3.	Use the property "relay" to define url redirections to other servers.
+
+		"relay": {
+			"/somedatabase": "myBackendServer"
+		}
+
+		If a client makes any request starting with "/somedatabase", for example, a resource at "/somedatabase/get?what=stuff",
+		the server will forward the request to "myBackendServer", which is defined in the "hosts" section.
+
+	4.	Use the "hosts" section to define backend servers for the "relay" section.
+
+		"hosts": {
+			"myBackendServer": {
+				"protocol": "http",
+				"host": "my.backend2.com",
+				"port": 80
+			}
+		}
+
+SEE ALSO
+	about_PWebServer
+
+

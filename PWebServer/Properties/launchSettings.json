@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "PWebServer": {
+      "commandName": "Executable",
+      "executablePath": "pwsh",
+      "commandLineArgs": "$(ProjectDir)/debug.ps1 -NoExit"
+    }
+  }
+}
