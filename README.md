@@ -3,7 +3,7 @@
 This is a simple powershell web server. The idea is to have a way to do quick prototyping of simple web UI.
 
 ## How to install
-Download the installer script at https://github.com/alexsandrovp/PWebServer/blob/1.0.0/installer/Install-PWebServer.ps1
+Download the installer script at https://github.com/alexsandrovp/PWebServer/releases/download/v2.0.0/Install-PWebServer.ps1
 and run it.
 
 ```powershell
